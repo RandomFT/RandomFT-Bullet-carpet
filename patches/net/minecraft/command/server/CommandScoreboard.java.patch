@@ -22,7 +22,7 @@
 +                // CM
 +                ScoreObjective objective = scoreboard.func_96535_a(s, iscorecriteria);
 +                if (!s2.isEmpty()) objective.func_96681_a(s2);
-+                StatHelper.initialize(scoreboard, p_184908_4_, objective);
++//                StatHelper.initialize(scoreboard, server, objective); bullet
 +                // CM END
              }
              else
@@ -30,7 +30,7 @@
 -                scoreboard.func_96535_a(s, iscorecriteria);
 +                // CM
 +                ScoreObjective objective = scoreboard.func_96535_a(s, iscorecriteria);
-+                StatHelper.initialize(scoreboard, p_184908_4_, objective);
++//                StatHelper.initialize(scoreboard, server, objective); bullet
 +                // CM END
              }
  

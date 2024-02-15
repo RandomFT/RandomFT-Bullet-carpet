@@ -1094,6 +1094,9 @@ public class CarpetSettings
 
     @Rule(desc = "enables /view (inv|echest) <playername> to view objective and manipulate enderchest/invenory", category = {EXPERIMENTAL, COMMANDS, BULLET})
     public static boolean commandInventory;
+
+    @Rule(desc = "enables /sb to display player's stats as scoreboard with a total entry", category = {EXPERIMENTAL, SURVIVAL, BULLET})
+    public static boolean scoreboardStats;
     // ===== API ===== //
 
     /**
