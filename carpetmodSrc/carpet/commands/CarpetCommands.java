@@ -19,12 +19,14 @@ public class CarpetCommands {
         handler.registerCommand(new CommandDebugCarpet());
         handler.registerCommand(new CommandDebuglogger());
         handler.registerCommand(new CommandDistance());
+        handler.registerCommand(new CommandEnderchest());//Bullet
         handler.registerCommand(new CommandEntityInfo());
         handler.registerCommand(new CommandFeel());
         handler.registerCommand(new CommandFillBiome());
         handler.registerCommand(new CommandGMC());
         handler.registerCommand(new CommandGMS());
         handler.registerCommand(new CommandGrow());
+        handler.registerCommand(new CommandInventory());//Bullet
         handler.registerCommand(new CommandLagSpike());
         handler.registerCommand(new CommandLazyChunkBehavior());
         handler.registerCommand(new CommandLight());

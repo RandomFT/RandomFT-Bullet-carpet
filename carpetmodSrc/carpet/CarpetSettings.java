@@ -1089,6 +1089,11 @@ public class CarpetSettings
     @Rule(desc = "Always sets player gamemode into survival when using /s command", category = {EXPERIMENTAL, BULLET})
     public static boolean alwaysSetPlayerIntoSurvival;
 
+    @Rule(desc = "enables /enderchest <Player> to replace objective enderchest with your own one(Only for OPs)", category = {EXPERIMENTAL, COMMANDS, BULLET})
+    public static boolean commandEnderchest;
+
+    @Rule(desc = "enables /view (inv|echest) <playername> to view objective and manipulate enderchest/invenory", category = {EXPERIMENTAL, COMMANDS, BULLET})
+    public static boolean commandInventory;
     // ===== API ===== //
 
     /**
