@@ -40,6 +40,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.server.MinecraftServer;
 
 import static carpet.CarpetSettings.RuleCategory.*;
+import static carpet.CarpetSettings.RuleCategory.BULLET;
 
 public class CarpetSettings
 {
@@ -1081,6 +1082,10 @@ public class CarpetSettings
    @Rule(desc = "Disables random entity AI wandering", category = CREATIVE)
     public static boolean disableWandering;
 
+    // ===== Bullet ===== //
+    @Rule(desc = "Tab info updates every gametick", category = {EXPERIMENTAL, BULLET})
+    public static boolean updateTabEveryGametick;
+
 
     // ===== API ===== //
 
@@ -1154,7 +1159,7 @@ public class CarpetSettings
     }
 
     public static enum RuleCategory {
-        TNT, FIX, SURVIVAL, CREATIVE, EXPERIMENTAL, OPTIMIZATIONS, FEATURE, COMMANDS
+        TNT, FIX, SURVIVAL, CREATIVE, EXPERIMENTAL, OPTIMIZATIONS, FEATURE, COMMANDS, BULLET
     }
 
     private static boolean validatePositive(int value) {
