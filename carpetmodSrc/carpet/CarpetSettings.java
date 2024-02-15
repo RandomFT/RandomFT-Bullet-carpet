@@ -1086,6 +1086,8 @@ public class CarpetSettings
     @Rule(desc = "Tab info updates every gametick", category = {EXPERIMENTAL, BULLET})
     public static boolean updateTabEveryGametick;
 
+    @Rule(desc = "Always sets player gamemode into survival when using /s command", category = {EXPERIMENTAL, BULLET})
+    public static boolean alwaysSetPlayerIntoSurvival;
 
     // ===== API ===== //
 
