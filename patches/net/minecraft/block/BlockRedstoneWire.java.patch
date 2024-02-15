@@ -68,87 +68,88 @@
      {
          IBlockState iblockstate = p_176345_4_;
          int i = ((Integer)p_176345_4_.func_177229_b(field_176351_O)).intValue();
-@@ -166,53 +181,66 @@
+@@ -166,71 +181,110 @@
          int k = p_176345_1_.func_175687_A(p_176345_2_);
          this.field_150181_a = true;
  
 -        if (k > 0 && k > j - 1)
-+        if(CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast)
-         {
+-        {
 -            j = k;
-+            //skipping unnecessary check
-+            if (k > 0 && k > j - 1)
-+            {
-+                j = k;
-+            }
-         }
+-        }
++        if (CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.modern) {
  
-         int l = 0;
+-        int l = 0;
++            if (CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast) {
++                //skipping unnecessary check
++                if (k > 0 && k > j - 1) {
++                    j = k;
++                }
++            }
  
 -        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
 -        {
 -            BlockPos blockpos = p_176345_2_.func_177972_a(enumfacing);
 -            boolean flag = blockpos.func_177958_n() != p_176345_3_.func_177958_n() || blockpos.func_177952_p() != p_176345_3_.func_177952_p();
--
++            int l = 0;
+ 
 -            if (flag)
-+        if(CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast || k < 15){
-+            for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
-             {
+-            {
 -                l = this.func_176342_a(p_176345_1_, blockpos, l);
--            }
-+                BlockPos blockpos = p_176345_2_.func_177972_a(enumfacing);
-+                boolean flag = blockpos.func_177958_n() != p_176345_3_.func_177958_n() || blockpos.func_177952_p() != p_176345_3_.func_177952_p();
++            if (CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast || k < 15) {
++                for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
++                    BlockPos blockpos = p_176345_2_.func_177972_a(enumfacing);
++                    boolean flag = blockpos.func_177958_n() != p_176345_3_.func_177958_n() || blockpos.func_177952_p() != p_176345_3_.func_177952_p();
++
++                    if (flag) {
++                        l = this.func_176342_a(p_176345_1_, blockpos, l);
++                    }
++
++                    if (p_176345_1_.func_180495_p(blockpos).func_185915_l() && !p_176345_1_.func_180495_p(p_176345_2_.func_177984_a()).func_185915_l()) {
++                        if (flag && p_176345_2_.func_177956_o() == p_176345_3_.func_177956_o()) {
++                            l = this.func_176342_a(p_176345_1_, blockpos.func_177984_a(), l);
++                        }
++                    }
++                    else if (!p_176345_1_.func_180495_p(blockpos).func_185915_l() && flag && p_176345_2_.func_177956_o() <= p_176345_3_.func_177956_o()) {
++                        l = this.func_176342_a(p_176345_1_, blockpos.func_177977_b(), l);
++                    }
++                }
+             }
  
 -            if (p_176345_1_.func_180495_p(blockpos).func_185915_l() && !p_176345_1_.func_180495_p(p_176345_2_.func_177984_a()).func_185915_l())
 -            {
 -                if (flag && p_176345_2_.func_177956_o() >= p_176345_3_.func_177956_o())
-+                if (flag)
-                 {
+-                {
 -                    l = this.func_176342_a(p_176345_1_, blockpos.func_177984_a(), l);
-+                    l = this.func_176342_a(p_176345_1_, blockpos, l);
++            if (CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast) {
++                if (l > j) {
++                    j = l - 1;
                  }
-+
-+                if (p_176345_1_.func_180495_p(blockpos).func_185915_l() && !p_176345_1_.func_180495_p(p_176345_2_.func_177984_a()).func_185915_l())
-+                {
-+                    if (flag && p_176345_2_.func_177956_o() >= p_176345_3_.func_177956_o())
-+                    {
-+                        l = this.func_176342_a(p_176345_1_, blockpos.func_177984_a(), l);
-+                    }
++                else if (j > 0) {
++                    --j;
 +                }
-+                else if (!p_176345_1_.func_180495_p(blockpos).func_185915_l() && flag && p_176345_2_.func_177956_o() <= p_176345_3_.func_177956_o())
-+                {
-+                    l = this.func_176342_a(p_176345_1_, blockpos.func_177977_b(), l);
++                else {
++                    j = 0;
++                }
++
++                if (k > j - 1) {
++                    j = k;
 +                }
              }
 -            else if (!p_176345_1_.func_180495_p(blockpos).func_185915_l() && flag && p_176345_2_.func_177956_o() <= p_176345_3_.func_177956_o())
-+        }
-+
-+        if(CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast){
-+            if (l > j)
-             {
+-            {
 -                l = this.func_176342_a(p_176345_1_, blockpos.func_177977_b(), l);
++            else {
 +                j = l - 1;
++                if (k > j) {
++                    j = k;
++                }
              }
 -        }
-+            else if (j > 0)
-+            {
-+                --j;
-+            }
-+            else
-+            {
-+                j = 0;
-+            }
  
 -        if (l > j)
 -        {
-+            if (k > j - 1)
-+            {
-+                j = k;
-+            }
-+        }else{
-             j = l - 1;
-+            if (k > j) j = k;
-         }
+-            j = l - 1;
+-        }
 -        else if (j > 0)
 -        {
 -            --j;
@@ -157,36 +158,76 @@
 -        {
 -            j = 0;
 -        }
++            if (i != j) {
++                p_176345_4_ = p_176345_4_.func_177226_a(field_176351_O, Integer.valueOf(j));
  
 -        if (k > j - 1)
 -        {
 -            j = k;
 -        }
-+        logPowered(p_176345_1_, p_176345_2_, j > MIN_POWER); // RSMM
++                if (p_176345_1_.func_180495_p(p_176345_2_) == iblockstate) {
++                    p_176345_1_.func_180501_a(p_176345_2_, p_176345_4_, 2);
++                }
  
-         if (i != j)
-         {
-@@ -223,11 +251,15 @@
-                 p_176345_1_.func_180501_a(p_176345_2_, p_176345_4_, 2);
-             }
+-        if (i != j)
+-        {
+-            p_176345_4_ = p_176345_4_.func_177226_a(field_176351_O, Integer.valueOf(j));
++                if (CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast) {
++                    //CM unneccessary
++                    this.field_150179_b.add(p_176345_2_);
  
--            this.field_150179_b.add(p_176345_2_);
--
--            for (EnumFacing enumfacing1 : EnumFacing.values())
-+            if(CarpetSettings.redstoneDustAlgorithm != CarpetSettings.RedstoneDustAlgorithm.fast)
-             {
--                this.field_150179_b.add(p_176345_2_.func_177972_a(enumfacing1));
-+                //CM unneccessary
-+                this.field_150179_b.add(p_176345_2_);
-+
-+                for (EnumFacing enumfacing1 : EnumFacing.values())
-+                {
-+                    this.field_150179_b.add(p_176345_2_.func_177972_a(enumfacing1));
+-            if (p_176345_1_.func_180495_p(p_176345_2_) == iblockstate)
+-            {
+-                p_176345_1_.func_180501_a(p_176345_2_, p_176345_4_, 2);
++                    for (EnumFacing enumfacing1 : EnumFacing.values()) {
++                        this.field_150179_b.add(p_176345_2_.func_177972_a(enumfacing1));
++                    }
 +                }
              }
-         }
++        }
++        else {
++            int l = 0;
++            for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
++                BlockPos blockpos = p_176345_2_.func_177972_a(enumfacing);
++                l = this.func_176342_a(p_176345_1_, blockpos, l);
++                if (p_176345_1_.func_180495_p(blockpos).func_185915_l()) {
++                    if (!p_176345_1_.func_180495_p(p_176345_2_.func_177984_a()).func_185915_l()) {
++                        l = this.func_176342_a(p_176345_1_, blockpos.func_177984_a(), l);
++                    }
++                }
++                else {
++                    l = this.func_176342_a(p_176345_1_, blockpos.func_177977_b(), l);
++                }
++                /*if (worldIn.getBlockState(blockpos).isNormalCube() && !worldIn.getBlockState(pos1.up()).isNormalCube()) {
++                    l = this.getMaxCurrentStrength(worldIn, blockpos.up(), l);
++                }
++                else if (!worldIn.getBlockState(blockpos).isNormalCube()) {
++                    l = this.getMaxCurrentStrength(worldIn, blockpos.down(), l);
++                }*/
++            }
++            int newSignalStrength = Math.max(k, l - 1);
++            if (i != newSignalStrength) {
++                p_176345_4_ = p_176345_4_.func_177226_a(field_176351_O, Integer.valueOf(newSignalStrength));
++                p_176345_1_.func_180501_a(p_176345_2_, p_176345_4_, 2);
++                //CM unneccessary
++                this.field_150179_b.add(p_176345_2_);
  
-@@ -251,7 +283,7 @@
+-            this.field_150179_b.add(p_176345_2_);
++                for (EnumFacing enumfacing1 : EnumFacing.values()) {
++                    this.field_150179_b.add(p_176345_2_.func_177972_a(enumfacing1));
++                }
+ 
+-            for (EnumFacing enumfacing1 : EnumFacing.values())
+-            {
+-                this.field_150179_b.add(p_176345_2_.func_177972_a(enumfacing1));
+             }
+-        }
+ 
++        }
+         return p_176345_4_;
+     }
+ 
+@@ -251,7 +305,7 @@
      {
          if (!p_176213_1_.field_72995_K)
          {
@@ -195,7 +236,7 @@
  
              for (EnumFacing enumfacing : EnumFacing.Plane.VERTICAL)
              {
-@@ -290,7 +322,7 @@
+@@ -290,7 +344,7 @@
                  p_180663_1_.func_175685_c(p_180663_2_.func_177972_a(enumfacing), this, false);
              }
  
@@ -204,7 +245,7 @@
  
              for (EnumFacing enumfacing1 : EnumFacing.Plane.HORIZONTAL)
              {
-@@ -332,7 +364,7 @@
+@@ -332,7 +386,7 @@
          {
              if (this.func_176196_c(p_189540_2_, p_189540_3_))
              {
@@ -213,7 +254,7 @@
              }
              else
              {
-@@ -354,6 +386,12 @@
+@@ -354,6 +408,12 @@
  
      public int func_180656_a(IBlockState p_180656_1_, IBlockAccess p_180656_2_, BlockPos p_180656_3_, EnumFacing p_180656_4_)
      {
@@ -226,7 +267,7 @@
          if (!this.field_150181_a)
          {
              return 0;
-@@ -361,6 +399,8 @@
+@@ -361,6 +421,8 @@
          else
          {
              int i = ((Integer)p_180656_1_.func_177229_b(field_176351_O)).intValue();
@@ -235,7 +276,7 @@
  
              if (i == 0)
              {
-@@ -398,7 +438,8 @@
+@@ -398,7 +460,8 @@
          }
      }
  
@@ -245,7 +286,7 @@
      {
          BlockPos blockpos = p_176339_2_.func_177972_a(p_176339_3_);
          IBlockState iblockstate = p_176339_1_.func_180495_p(blockpos);
-@@ -435,6 +476,12 @@
+@@ -435,6 +498,12 @@
  
      protected static boolean func_176343_a(IBlockState p_176343_0_, @Nullable EnumFacing p_176343_1_)
      {
@@ -258,7 +299,7 @@
          Block block = p_176343_0_.func_177230_c();
  
          if (block == Blocks.field_150488_af)
-@@ -514,6 +561,33 @@
+@@ -514,6 +583,33 @@
          return BlockFaceShape.UNDEFINED;
      }
  

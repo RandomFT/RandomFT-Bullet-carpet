@@ -604,11 +604,12 @@ public class CarpetSettings
 
     @Rule(desc = "Redstone dust algorithm", category = {EXPERIMENTAL, OPTIMIZATIONS}, extra = {
             "Fast redstone dust by Theosib",
-            "Random redstone dust to test if your contraption is locational"
+            "Random redstone dust to test if your contraption is locational",
+            "Modern aims to mimic 1.15's signal decrement to improve lag efficiency"
     })
     public static RedstoneDustAlgorithm redstoneDustAlgorithm = RedstoneDustAlgorithm.vanilla;
     public static enum RedstoneDustAlgorithm {
-        vanilla, fast, random
+        vanilla, fast, random,modern
     }
 
     @Rule(desc = "TNT causes less lag when exploding in the same spot and in liquids", category = TNT)
