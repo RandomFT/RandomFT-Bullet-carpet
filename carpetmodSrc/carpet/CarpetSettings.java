@@ -1079,7 +1079,7 @@ public class CarpetSettings
     public static boolean commandTicktimes = true;
     @Rule(desc = "Enables /village to query information about villages.", category = COMMANDS)
     public static boolean commandVillage = true;
-   @Rule(desc = "Disables random entity AI wandering", category = CREATIVE)
+    @Rule(desc = "Disables random entity AI wandering", category = CREATIVE)
     public static boolean disableWandering;
 
     // ===== Bullet ===== //
