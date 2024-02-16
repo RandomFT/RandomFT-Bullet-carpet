@@ -145,6 +145,7 @@ public class CommandRNG extends CommandCarpetBase {
         } else if ("randomtickedChunksCount".equalsIgnoreCase(args[0])) {
             World world = sender.getEntityWorld();
             int iters = Integer.MAX_VALUE;
+            int subchunkneedsRandomTick = 0;
             int chunkCount = 0;
             int x = 0;
             int z = 0;
@@ -161,12 +162,20 @@ public class CommandRNG extends CommandCarpetBase {
                 for (Iterator<Chunk> iterator = ((WorldServer) world).playerChunkMap.getChunkIterator(); iterator
                         .hasNext() && chunkCount < iters; ((WorldServer) world).profiler.endSection()) {
                     Chunk chunk = iterator.next();
+//                    System.out.println("chunk x: " + chunk.x + " z: " + chunk.z);
                     if (iters != Integer.MAX_VALUE) {
                         chunkCount++;
                         x = chunk.x;
                         z = chunk.z;
                     }
                     count++;
+                    //Added
+                    for (ExtendedBlockStorage extendedblockstorage : chunk.getBlockStorageArray()) {
+                        if (extendedblockstorage != Chunk.NULL_BLOCK_STORAGE && extendedblockstorage.needsRandomTick()) {
+                            subchunkneedsRandomTick++;
+                            //break;
+                        }
+                    }
                 }
                 if (iters != Integer.MAX_VALUE) {
                     notifyCommandListener(sender, this,
@@ -175,7 +184,7 @@ public class CommandRNG extends CommandCarpetBase {
                                     count, x, z));
                 } else {
                     notifyCommandListener(sender, this,
-                            String.format("Number of chunks around the player random ticking: %d", count));
+                            String.format("Number of chunks around the player random ticking: %d", subchunkneedsRandomTick));
                 }
             }
         } else if ("randomtickedBlocksInRange".equalsIgnoreCase(args[0])) {
