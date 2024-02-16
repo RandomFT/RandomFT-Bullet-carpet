@@ -1097,6 +1097,10 @@ public class CarpetSettings
 
     @Rule(desc = "enables /sb to display player's stats as scoreboard with a total entry", category = {EXPERIMENTAL, SURVIVAL, BULLET})
     public static boolean scoreboardStats;
+
+    @Rule(desc = "Fixes block states in F3 debug mode not updating for hoppers, droppers and dispensers.", category = {FIX, EXPERIMENTAL, BULLET})
+    public static boolean blockStateSyncing;
+
     // ===== API ===== //
 
     /**
