@@ -1101,6 +1101,19 @@ public class CarpetSettings
     @Rule(desc = "Fixes block states in F3 debug mode not updating for hoppers, droppers and dispensers.", category = {FIX, EXPERIMENTAL, BULLET})
     public static boolean blockStateSyncing;
 
+    @Rule(
+            desc = "Edge cases are as frequent as common cases, for testing only!!",
+            extra = {"Velocities of items from dispensers, blaze projectiles, fireworks ",
+                    "Directions of fireballs, wither skulls, fishing bobbers, ",
+                    "items dropped from blocks and inventories, llamas spit, triggered trap horses",
+                    "Damage dealt with projectiles",
+                    "Blaze aggro sensitivity",
+                    "Mobs spawned follow range"
+            },
+            category = {CREATIVE, EXPERIMENTAL, BULLET}
+    )
+    public static boolean extremeBehaviours;
+
     // ===== API ===== //
 
     /**
