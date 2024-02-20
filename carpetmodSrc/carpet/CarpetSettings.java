@@ -107,7 +107,7 @@ public class CarpetSettings
     @Rule(desc = "Enables /lazychunkbehavior command", category = COMMANDS, extra = {
             "Makes a chunk act like a lazy chunk for entities and falling sand"
     })
-    
+
     public static boolean commandEntityInfo = true;
 
     @Rule(desc = "Enables /unload command to inspect chunk unloading order", category = COMMANDS)
@@ -1089,13 +1089,13 @@ public class CarpetSettings
     @Rule(desc = "Always sets player gamemode into survival when using /s command", category = {EXPERIMENTAL, BULLET})
     public static boolean alwaysSetPlayerIntoSurvival;
 
-    @Rule(desc = "enables /enderchest <Player> to replace objective enderchest with your own one(Only for OPs)", category = {EXPERIMENTAL, COMMANDS, BULLET})
+    @Rule(desc = "Enables /enderchest <Player> to replace objective enderchest with your own one(Only for OPs)", category = {EXPERIMENTAL, COMMANDS, BULLET})
     public static boolean commandEnderchest;
 
-    @Rule(desc = "enables /view (inv|echest) <playername> to view objective and manipulate enderchest/invenory", category = {EXPERIMENTAL, COMMANDS, BULLET})
+    @Rule(desc = "Enables /view (inv|echest) <playername> to view objective and manipulate enderchest/invenory", category = {EXPERIMENTAL, COMMANDS, BULLET})
     public static boolean commandInventory;
 
-    @Rule(desc = "enables /sb to display player's stats as scoreboard with a total entry", category = {EXPERIMENTAL, SURVIVAL, BULLET})
+    @Rule(desc = "Enables /sb to display player's stats as scoreboard with a total entry", category = {EXPERIMENTAL, SURVIVAL, BULLET})
     public static boolean scoreboardStats;
 
     @Rule(desc = "Fixes block states in F3 debug mode not updating for hoppers, droppers and dispensers.", category = {FIX, EXPERIMENTAL, BULLET})
@@ -1114,6 +1114,12 @@ public class CarpetSettings
     )
     public static boolean extremeBehaviours;
 
+    @Rule(
+            desc = "Prometheus integration",
+            extra = "Integration with prometheus java library for metrics collection and monitoring. Default port is 1234",
+            category = {EXPERIMENTAL, BULLET,}
+    )
+    public static boolean prometheusIntegration;
     // ===== API ===== //
 
     /**

@@ -48,3 +48,6 @@ whitelist.json
 /carpet/
 /buildSrc/out/
 /run/
+
+# Prometheus integration
+/Prometheus config.json
