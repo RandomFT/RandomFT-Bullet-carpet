@@ -15,8 +15,12 @@ import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CommandScoreboardStats extends CommandCarpetBase {
+
+
     /**
      * Gets the name of the command
      */
@@ -35,6 +39,8 @@ public class CommandScoreboardStats extends CommandCarpetBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if (command_enabled("scoreboardStats", sender)) {
             if (args.length > 0 && args.length < 3) {
+                final ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+
                 String[] arguments = args[0].split("\\.");
                 Scoreboard scoreboard = server.getWorld(0).getScoreboard();
                 String criteria;
@@ -133,6 +139,11 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                         scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
                         statType = "Health";
                         break;
+                    case "playedOneMinute":
+                        criteria = "minutesPlayed";
+                        scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
+                        statType = "Minutes played";
+                        break;
                     default:
                         criteria = "stat." + arguments[0];
                         scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
@@ -155,6 +166,9 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                                 if (statType.equals("Health")) {
                                     objective.setDisplayName(TextFormatting.GOLD + statType);
                                 }
+                                else if (statType.equals("Minutes played")) {
+                                    objective.setDisplayName(TextFormatting.GOLD + statType);
+                                }
                                 else if (statType.equals("other")) {
                                     objective.setDisplayName(TextFormatting.GOLD + arguments[0]);
                                 }
@@ -166,7 +180,19 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                         else {
                             objective.setDisplayName(TextFormatting.GOLD + statType + arguments[1]);
                         }
-                        StatHelper.initialize(scoreboard, server, objective);
+                        if (statType.equals("Minutes played")) {
+                            singleThreadExecutor.submit(() -> {
+                                StatHelper.initializeWithDividerWithDifferentCriteria(scoreboard, server, objective, 1200, IScoreCriteria.INSTANCES.get("stat.playOneMinute"));
+                            });
+                        }
+
+                        else {
+                            singleThreadExecutor.submit(() -> {
+                                StatHelper.initialize(scoreboard, server, objective);
+                            });
+//                            StatHelper.initialize(scoreboard, server, objective);
+                        }
+                        singleThreadExecutor.shutdown();
                     }
                     else {
                         objective = scoreboard.getObjective(objectiveName);
@@ -261,6 +287,7 @@ public class CommandScoreboardStats extends CommandCarpetBase {
             Set<String> instancesKeys = IScoreCriteria.INSTANCES.keySet();
             options.add("clear");
             options.add("health");
+            options.add("playedOneMinute");
             for (String key : instancesKeys) {
                 String[] splittedKey = key.split("\\.");
                 StringBuilder finalOption = new StringBuilder();
