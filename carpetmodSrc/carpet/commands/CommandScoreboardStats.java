@@ -5,10 +5,12 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.SyntaxErrorException;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.item.Item;
 import net.minecraft.scoreboard.IScoreCriteria;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -151,9 +153,27 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                 }
                 if (scoreCriteria != null) {
                     int i = 1;
+
                     String objectiveName = "st." + args[0];
+
+                    if (arguments.length > 1) {
+                        ResourceLocation resourceLocation = new ResourceLocation(arguments[1]);
+                        Item item = Item.REGISTRY.getObject(resourceLocation);
+
+                        int idForItem = Item.REGISTRY.getIDForObject(item);
+                        StringBuilder sb = new StringBuilder("st.");
+                        sb.append(arguments[0]);
+                        sb.append(".");
+                        sb.append(idForItem);
+                        if (arguments.length > 2) {
+                            sb.append(".");
+                            sb.append(arguments[2]);
+                        }
+                        objectiveName = sb.toString();
+                    }
+
                     ScoreObjective objective;
-                    if (objectiveName.length() > 16) {
+                    if (objectiveName.length() > 16) { //Shouldn't happen
                         objectiveName = objectiveName.substring(0, 16);
                     }
                     if (scoreboard.getObjective(objectiveName) == null) {
