@@ -80,7 +80,7 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                     case "b":
                         criteria = "stat.breakItem.minecraft." + arguments[1];
                         if (arguments.length == 3) {
-                            criteria += arguments[2];
+                            criteria += "." + arguments[2];
                         }
                         scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
                         statType = " broken";
@@ -88,7 +88,7 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                     case "c":
                         criteria = "stat.craftItem.minecraft." + arguments[1];
                         if (arguments.length == 3) {
-                            criteria += arguments[2];
+                            criteria += "." + arguments[2];
                         }
                         scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
                         statType = " crafted";
@@ -96,7 +96,7 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                     case "d":
                         criteria = "stat.drop.minecraft." + arguments[1];
                         if (arguments.length == 3) {
-                            criteria += arguments[2];
+                            criteria += "." + arguments[2];
                         }
                         scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
                         statType = " dropped";
@@ -109,7 +109,7 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                     case "m":
                         criteria = "stat.mineBlock.minecraft." + arguments[1];
                         if (arguments.length == 3) {
-                            criteria += arguments[2];
+                            criteria += "." + arguments[2];
                         }
                         scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
                         statType = " mined";
@@ -117,7 +117,7 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                     case "p":
                         criteria = "stat.pickup.minecraft." + arguments[1];
                         if (arguments.length == 3) {
-                            criteria += arguments[2];
+                            criteria += "." + arguments[2];
                         }
                         scoreCriteria = IScoreCriteria.INSTANCES.get(criteria);
                         statType = " picked up";
