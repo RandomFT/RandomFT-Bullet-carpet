@@ -33,8 +33,7 @@ public class CommandScoreboardStats extends CommandCarpetBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/sb <stat type(b|c|d|k|m|p|u|K|or empty for general stats)>.<stat target>" +
-                " <where to display(list|sidebar|belowName|empty for sidebar) or /sc clear <where to clear(empty is sidebar)>";
+        return "/sb <stat type(b|c|d|k|m|p|u|K|or empty for general stats)>.<stat target>" + " <where to display(list|sidebar|belowName|empty for sidebar) or /sc clear <where to clear(empty is sidebar)>";
     }
 
     @Override
@@ -177,29 +176,48 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                         objectiveName = objectiveName.substring(0, 16);
                     }
                     if (scoreboard.getObjective(objectiveName) == null) {
+                        String displayName = "ERROR";
                         objective = scoreboard.addScoreObjective(objectiveName, scoreCriteria);
                         if (!statType.equals("Killed by ")) {
                             if (arguments.length == 3) {
-                                objective.setDisplayName(TextFormatting.GOLD + arguments[1].replace('_', ' ').substring(0, 1).toUpperCase() + arguments[1].replace('_', ' ').substring(1) + " " + arguments[2] + statType);
+                                displayName = TextFormatting.GOLD + arguments[1].replace('_', ' ').substring(0, 1).toUpperCase()
+                                        + arguments[1].replace('_', ' ').substring(1) + " " + arguments[2] + statType;
                             }
                             else {
-                                if (statType.equals("Health")) {
-                                    objective.setDisplayName(TextFormatting.GOLD + statType);
-                                }
-                                else if (statType.equals("Minutes played")) {
-                                    objective.setDisplayName(TextFormatting.GOLD + statType);
-                                }
-                                else if (statType.equals("other")) {
-                                    objective.setDisplayName(TextFormatting.GOLD + arguments[0]);
-                                }
-                                else {
-                                    objective.setDisplayName(TextFormatting.GOLD + arguments[1].replace('_', ' ').substring(0, 1).toUpperCase() + arguments[1].replace('_', ' ').substring(1) + statType);
+                                switch (statType) {
+                                    case "Health":
+                                    case "Minutes played":
+                                        displayName = TextFormatting.GOLD + statType;
+                                        break;
+                                    case "other":
+                                        displayName = TextFormatting.GOLD + arguments[0];
+                                        break;
+                                    default:
+                                        displayName = TextFormatting.GOLD + arguments[1].replace('_', ' ').substring(0, 1).toUpperCase()
+                                                + arguments[1].replace('_', ' ').substring(1) + statType;
+
+                                        break;
                                 }
                             }
                         }
                         else {
-                            objective.setDisplayName(TextFormatting.GOLD + statType + arguments[1]);
+                            displayName = TextFormatting.GOLD + statType + arguments[1];
                         }
+                        displayName = abreviateIfNecessary(displayName, "glazed", "glz");
+                        displayName = abreviateIfNecessary(displayName, "terracotta", "terracota");
+                        displayName = abreviateIfNecessary(displayName, "pressure", "prsure");
+                        displayName = abreviateIfNecessary(displayName, "weighted", "wghtd");
+                        displayName = abreviateIfNecessary(displayName, "crafted", "craft");
+                        displayName = abreviateIfNecessary(displayName, "picked", "pick");
+                        displayName = abreviateIfNecessary(displayName, "dropped", "drop");
+
+
+                        if (displayName.length() > 32) {
+                            displayName = displayName.substring(0, 32);
+                        }
+
+                        objective.setDisplayName(displayName);
+
                         if (statType.equals("Minutes played")) {
                             singleThreadExecutor.submit(() -> {
                                 StatHelper.initializeWithDividerWithDifferentCriteria(scoreboard, server, objective, 1200, IScoreCriteria.INSTANCES.get("stat.playOneMinute"));
@@ -298,6 +316,17 @@ public class CommandScoreboardStats extends CommandCarpetBase {
         }
     }
 
+
+    public String abreviateIfNecessary(String string, String textToReplace, String abreviation) {
+        String result = string;
+
+        if (string.length() > 32 && string.contains(textToReplace)) {
+            result = string.replace(textToReplace, abreviation);
+        }
+
+        return result;
+    }
+
     /**
      * Get a list of options for when the user presses the TAB key
      */
@@ -352,6 +381,12 @@ public class CommandScoreboardStats extends CommandCarpetBase {
                         }
                     }
                     options.add(finalOption.toString());
+                }
+            }
+
+            for (String option : options) {
+                if (option.length() > 32 - 7) {
+                    System.out.println(option);
                 }
             }
             return getListOfStringsMatchingLastWord(args, options);
