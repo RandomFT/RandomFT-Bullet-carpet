@@ -71,6 +71,62 @@ Here I will list what we did:
 /carpet prometheusExtension
 ```
 
+### RandomFT changes:
+
+Instaminable Endstone
+Allows breaking Endstone instantly.
+
+/carpet instaminableEndstone true
+
+
+Anvil Turns Cobblestone to Sand
+Dropping an anvil on cobblestone turns it into sand.
+
+/carpet anvilTurnsCobbleToSand true
+
+
+Renewable Mansion Mobs
+Woodland mansion mobs respawn (only in newly generated mansions).
+
+/carpet mansionMobsRespawn true
+
+
+Blaze Meal
+Nether wart grows faster when fed with blaze powder.
+
+/carpet blazeMeal true
+
+
+Silk Touch End Portal Frame (Experimental)
+End Portal Frames can drop as items when mined with Silk Touch.
+
+/carpet silkTouchEndPortalFrame true
+
+
+Anvil Colored Names
+You can rename items using &x color codes in an anvil.
+
+/carpet anvilColoredNames true
+
+Color Codes for Anvil Colored Names
+Code	Color
+&0	Black
+&1	Dark Blue
+&2	Dark Green
+&3	Dark Aqua
+&4	Dark Red
+&5	Dark Purple
+&6	Gold
+&7	Gray
+&8	Dark Gray
+&9	Blue
+&a	Green
+&b	Aqua
+&c	Red
+&d	Light Purple
+&e	Yellow
+&f	White
+
 ### Prometheus addition:
 I added prometheus integration(https://github.com/prometheus/client_java) into this for monitoring`/prometheus` to configure port.(Pasted license since i had to copy the code)
 
