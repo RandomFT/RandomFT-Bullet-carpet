@@ -1,0 +1,63 @@
+--- ../src-base/minecraft/net/minecraft/server/management/PlayerProfileCache.java
++++ ../src-work/minecraft/net/minecraft/server/management/PlayerProfileCache.java
+@@ -29,13 +29,7 @@
+ import java.nio.charset.StandardCharsets;
+ import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+-import java.util.Calendar;
+-import java.util.Date;
+-import java.util.Deque;
+-import java.util.List;
+-import java.util.Locale;
+-import java.util.Map;
+-import java.util.UUID;
++import java.util.*;
+ import javax.annotation.Nullable;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.util.JsonUtils;
+@@ -45,7 +39,7 @@
+ {
+     public static final SimpleDateFormat field_152659_a = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+     private static boolean field_187322_c;
+-    private final Map<String, PlayerProfileCache.ProfileEntry> field_152661_c = Maps.<String, PlayerProfileCache.ProfileEntry>newHashMap();
++    private final Map<String, PlayerProfileCache.ProfileEntry> field_152661_c =new TreeMap<>(String.CASE_INSENSITIVE_ORDER); //Maps.<String, PlayerProfileCache.ProfileEntry>newHashMap(); Bullet
+     private final Map<UUID, PlayerProfileCache.ProfileEntry> field_152662_d = Maps.<UUID, PlayerProfileCache.ProfileEntry>newHashMap();
+     private final Deque<GameProfile> field_152663_e = Lists.<GameProfile>newLinkedList();
+     private final GameProfileRepository field_187323_g;
+@@ -130,17 +124,17 @@
+             p_152651_2_ = calendar.getTime();
+         }
+ 
+-        String s = p_152651_1_.getName().toLowerCase(Locale.ROOT);
++        String s = p_152651_1_.getName()/*.toLowerCase(Locale.ROOT)*/;//bullet
+         PlayerProfileCache.ProfileEntry playerprofilecache$profileentry = new PlayerProfileCache.ProfileEntry(p_152651_1_, p_152651_2_);
+ 
+         if (this.field_152662_d.containsKey(uuid))
+         {
+             PlayerProfileCache.ProfileEntry playerprofilecache$profileentry1 = this.field_152662_d.get(uuid);
+-            this.field_152661_c.remove(playerprofilecache$profileentry1.func_152668_a().getName().toLowerCase(Locale.ROOT));
++            this.field_152661_c.remove(playerprofilecache$profileentry1.func_152668_a().getName()/*.toLowerCase(Locale.ROOT)*/);//Bullet
+             this.field_152663_e.remove(p_152651_1_);
+         }
+ 
+-        this.field_152661_c.put(p_152651_1_.getName().toLowerCase(Locale.ROOT), playerprofilecache$profileentry);
++        this.field_152661_c.put(p_152651_1_.getName()/*.toLowerCase(Locale.ROOT)*/, playerprofilecache$profileentry);//Bullet
+         this.field_152662_d.put(uuid, playerprofilecache$profileentry);
+         this.field_152663_e.addFirst(p_152651_1_);
+         this.func_152658_c();
+@@ -149,13 +143,13 @@
+     @Nullable
+     public GameProfile func_152655_a(String p_152655_1_)
+     {
+-        String s = p_152655_1_.toLowerCase(Locale.ROOT);
++        String s = p_152655_1_/*.toLowerCase(Locale.ROOT)*/;//Bullet
+         PlayerProfileCache.ProfileEntry playerprofilecache$profileentry = this.field_152661_c.get(s);
+ 
+         if (playerprofilecache$profileentry != null && (new Date()).getTime() >= playerprofilecache$profileentry.field_152673_c.getTime())
+         {
+             this.field_152662_d.remove(playerprofilecache$profileentry.func_152668_a().getId());
+-            this.field_152661_c.remove(playerprofilecache$profileentry.func_152668_a().getName().toLowerCase(Locale.ROOT));
++            this.field_152661_c.remove(playerprofilecache$profileentry.func_152668_a().getName()/*.toLowerCase(Locale.ROOT)*/);//Bullet
+             this.field_152663_e.remove(playerprofilecache$profileentry.func_152668_a());
+             playerprofilecache$profileentry = null;
+         }

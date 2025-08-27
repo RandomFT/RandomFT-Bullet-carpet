@@ -1,0 +1,29 @@
+--- ../src-base/minecraft/net/minecraft/world/gen/structure/WoodlandMansion.java
++++ ../src-work/minecraft/net/minecraft/world/gen/structure/WoodlandMansion.java
+@@ -13,6 +13,8 @@
+ import net.minecraft.world.biome.BiomeProvider;
+ import net.minecraft.world.chunk.ChunkPrimer;
+ import net.minecraft.world.gen.ChunkGeneratorOverworld;
++import java.util.ArrayList;
++import java.util.List;
+ 
+ public class WoodlandMansion extends MapGenStructure
+ {
+@@ -78,6 +80,7 @@
+     {
+         return new WoodlandMansion.Start(this.field_75039_c, this.field_191075_h, this.field_75038_b, p_75049_1_, p_75049_2_);
+     }
++    public static List<StructureBoundingBox> mansionBoxes = new ArrayList<>();
+ 
+     public static class Start extends StructureStart
+         {
+@@ -91,6 +94,9 @@
+             {
+                 super(p_i47235_4_, p_i47235_5_);
+                 this.func_191092_a(p_i47235_1_, p_i47235_2_, p_i47235_3_, p_i47235_4_, p_i47235_5_);
++                this.func_75072_c();
++
++                mansionBoxes.add(this.func_75071_a());
+             }
+ 
+             private void func_191092_a(World p_191092_1_, ChunkGeneratorOverworld p_191092_2_, Random p_191092_3_, int p_191092_4_, int p_191092_5_)

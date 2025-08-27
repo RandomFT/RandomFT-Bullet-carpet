@@ -1,0 +1,63 @@
+--- ../src-base/minecraft/net/minecraft/block/BlockEndPortalFrame.java
++++ ../src-work/minecraft/net/minecraft/block/BlockEndPortalFrame.java
+@@ -1,5 +1,6 @@
+ package net.minecraft.block;
+ 
++import carpet.CarpetSettings;
+ import com.google.common.base.Predicates;
+ import java.util.List;
+ import java.util.Random;
+@@ -18,6 +19,7 @@
+ import net.minecraft.block.state.pattern.FactoryBlockPattern;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.EntityLivingBase;
++import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.init.Blocks;
+ import net.minecraft.init.Items;
+ import net.minecraft.item.Item;
+@@ -28,8 +30,12 @@
+ import net.minecraft.util.math.BlockPos;
+ import net.minecraft.world.IBlockAccess;
+ import net.minecraft.world.World;
++import net.minecraft.item.ItemStack;
+ 
+-public class BlockEndPortalFrame extends Block
++
++import redstone.multimeter.block.Meterable;
++
++public class BlockEndPortalFrame extends Block implements Meterable /* RSMM */
+ {
+     public static final PropertyDirection field_176508_a = BlockHorizontal.field_185512_D;
+     public static final PropertyBool field_176507_b = PropertyBool.func_177716_a("eye");
+@@ -42,7 +48,19 @@
+         super(Material.field_151576_e, MapColor.field_151651_C);
+         this.func_180632_j(this.field_176227_L.func_177621_b().func_177226_a(field_176508_a, EnumFacing.NORTH).func_177226_a(field_176507_b, Boolean.valueOf(false)));
+     }
++    @Override
++    protected boolean func_149700_E() {
++        return CarpetSettings.silkTouchEndPortalFrame;
++    }
+ 
++    @Override
++    protected ItemStack func_180643_i(IBlockState state) {
++        if (CarpetSettings.silkTouchEndPortalFrame) {
++            return new ItemStack(Blocks.field_150378_br);
++        }
++        return ItemStack.field_190927_a;
++    }
++    
+     public boolean func_149662_c(IBlockState p_149662_1_)
+     {
+         return false;
+@@ -135,4 +153,11 @@
+     {
+         return p_193383_4_ == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+     }
++
++    // RSMM
++    @Override
++    public boolean isActive(World world, BlockPos pos, IBlockState state) {
++        return state.func_177229_b(field_176507_b);
++    }
++
+ }

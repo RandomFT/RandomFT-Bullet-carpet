@@ -1,0 +1,32 @@
+--- ../src-base/minecraft/net/minecraft/inventory/InventoryHelper.java
++++ ../src-work/minecraft/net/minecraft/inventory/InventoryHelper.java
+@@ -1,6 +1,9 @@
+ package net.minecraft.inventory;
+ 
+ import java.util.Random;
++
++import carpet.CarpetSettings;
++import carpet.utils.RandomTools;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.item.EntityItem;
+ import net.minecraft.item.ItemStack;
+@@ -44,9 +47,16 @@
+         {
+             EntityItem entityitem = new EntityItem(p_180173_0_, p_180173_1_ + (double)f, p_180173_3_ + (double)f1, p_180173_5_ + (double)f2, p_180173_7_.func_77979_a(field_180177_a.nextInt(21) + 10));
+             float f3 = 0.05F;
+-            entityitem.field_70159_w = field_180177_a.nextGaussian() * 0.05000000074505806D;
+-            entityitem.field_70181_x = field_180177_a.nextGaussian() * 0.05000000074505806D + 0.20000000298023224D;
+-            entityitem.field_70179_y = field_180177_a.nextGaussian() * 0.05000000074505806D;
++            if (!CarpetSettings.extremeBehaviours) {
++                entityitem.field_70159_w = field_180177_a.nextGaussian() * 0.05000000074505806D;
++                entityitem.field_70181_x = field_180177_a.nextGaussian() * 0.05000000074505806D + 0.20000000298023224D;
++                entityitem.field_70179_y = field_180177_a.nextGaussian() * 0.05000000074505806D;
++            }
++            else {
++                entityitem.field_70159_w = RandomTools.nextNotGaussian(field_180177_a) * 0.05000000074505806D;
++                entityitem.field_70181_x = RandomTools.nextNotGaussian(field_180177_a) * 0.05000000074505806D + 0.20000000298023224D;
++                entityitem.field_70179_y = RandomTools.nextNotGaussian(field_180177_a) * 0.05000000074505806D;
++            }
+             p_180173_0_.func_72838_d(entityitem);
+         }
+     }
