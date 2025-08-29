@@ -40,7 +40,7 @@
      public EntityFallingBlock(World p_i1706_1_)
      {
          super(p_i1706_1_);
-@@ -61,12 +82,29 @@
+@@ -61,12 +82,18 @@
          this.field_70167_r = p_i45848_4_;
          this.field_70166_s = p_i45848_6_;
          this.func_184530_a(new BlockPos(this));
@@ -48,17 +48,6 @@
 +        this.iceCount = 0;
 +        if (LoggerRegistry.__fallingBlocks)
 +            logHelper = new TrajectoryLogHelper("fallingBlocks");
-+
-+        if (CarpetSettings.fallingBlocksKeepTileData) {
-+            BlockPos pos = new BlockPos(p_i45848_2_, p_i45848_4_, p_i45848_6_);
-+            TileEntity te = p_i45848_1_.func_175625_s(pos);
-+            if (te != null) {
-+                NBTTagCompound nbt = new NBTTagCompound();
-+                te.func_189515_b(nbt);
-+                this.field_145810_d = nbt;
-+            }
-+        }
-+
      }
  
      public boolean func_70075_an()
@@ -70,7 +59,7 @@
  
      public void func_184530_a(BlockPos p_184530_1_)
      {
-@@ -90,6 +128,11 @@
+@@ -90,6 +117,11 @@
  
      public void func_70071_h_()
      {
@@ -82,7 +71,29 @@
          Block block = this.field_175132_d.func_177230_c();
  
          if (this.field_175132_d.func_185904_a() == Material.field_151579_a)
-@@ -122,8 +165,44 @@
+@@ -108,6 +140,15 @@
+ 
+                 if (this.field_70170_p.func_180495_p(blockpos).func_177230_c() == block)
+                 {
++
++                    if (CarpetSettings.fallingBlocksKeepTileData && this.field_70170_p.func_175625_s(blockpos) != null)
++                    {
++                        NBTTagCompound nbt = new NBTTagCompound();
++                        this.field_70170_p.func_175625_s(blockpos).func_189515_b(nbt);
++                        this.field_145810_d = nbt;
++                    }
++
++
+                     this.field_70170_p.func_175698_g(blockpos);
+                 }
+                 else if (!this.field_70170_p.field_72995_K)
+@@ -117,13 +158,50 @@
+                 }
+             }
+ 
++
+             if (!this.func_189652_ae())
+             {
                  this.field_70181_x -= 0.03999999910593033D;
              }
  
@@ -128,7 +139,7 @@
              if (!this.field_70170_p.field_72995_K)
              {
                  BlockPos blockpos1 = new BlockPos(this);
-@@ -168,6 +247,34 @@
+@@ -168,6 +246,34 @@
                      this.field_70179_y *= 0.699999988079071D;
                      this.field_70181_x *= -0.5D;
  
@@ -163,7 +174,7 @@
                      if (iblockstate.func_177230_c() != Blocks.field_180384_M)
                      {
                          this.func_70106_y();
-@@ -181,32 +288,30 @@
+@@ -181,32 +287,30 @@
                                      ((BlockFalling)block).func_176502_a_(this.field_70170_p, blockpos1, this.field_175132_d, iblockstate);
                                  }
  
@@ -209,7 +220,7 @@
                              }
                          }
                          else if (block instanceof BlockFalling)
-@@ -356,4 +461,12 @@
+@@ -356,4 +460,12 @@
      {
          return true;
      }
