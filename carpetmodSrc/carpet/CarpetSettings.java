@@ -58,6 +58,9 @@ public class CarpetSettings
     public static long endChunkSeed = 0;
 
     // ===== RANDOMFT ===== //
+    @Rule(desc = "Falling blocks keep their TileEntity NBT when falling or dropping as items", category = {RANDOMFT, EXPERIMENTAL})
+    public static boolean fallingBlocksKeepTileData = false;
+
     @Rule(desc = "Instaminar Endstone", category = {RANDOMFT, SURVIVAL})
     public static boolean instaminableEndstone = false;
 
