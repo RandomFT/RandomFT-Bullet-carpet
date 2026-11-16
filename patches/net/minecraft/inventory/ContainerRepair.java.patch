@@ -1,0 +1,30 @@
+--- ../src-base/minecraft/net/minecraft/inventory/ContainerRepair.java
++++ ../src-work/minecraft/net/minecraft/inventory/ContainerRepair.java
+@@ -1,6 +1,8 @@
+ package net.minecraft.inventory;
+ 
+ import java.util.Map;
++
++import carpet.CarpetSettings;
+ import net.minecraft.block.BlockAnvil;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.enchantment.Enchantment;
+@@ -291,7 +293,9 @@
+                     }
+                 }
+             }
+-
++            if (CarpetSettings.anvilColoredNames && this.field_82857_m != null && !this.field_82857_m.isEmpty()) {
++                this.field_82857_m = this.field_82857_m.replaceAll("(?i)&([0-9a-fk-or])", "\u00A7$1");
++            }
+             if (StringUtils.isBlank(this.field_82857_m))
+             {
+                 if (itemstack.func_82837_s())
+@@ -305,6 +309,7 @@
+             {
+                 k = 1;
+                 i += k;
++
+                 itemstack1.func_151001_c(this.field_82857_m);
+             }
+ 

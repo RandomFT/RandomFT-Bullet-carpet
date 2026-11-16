@@ -1,0 +1,55 @@
+--- ../src-base/minecraft/net/minecraft/entity/monster/EntityMob.java
++++ ../src-work/minecraft/net/minecraft/entity/monster/EntityMob.java
+@@ -1,5 +1,6 @@
+ package net.minecraft.entity.monster;
+ 
++import carpet.CarpetSettings;
+ import net.minecraft.enchantment.EnchantmentHelper;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.EntityCreature;
+@@ -19,6 +20,8 @@
+ import net.minecraft.world.EnumSkyBlock;
+ import net.minecraft.world.World;
+ 
++import carpet.logging.logHelpers.DamageReporter;
++
+ public abstract class EntityMob extends EntityCreature implements IMob
+ {
+     public EntityMob(World p_i1738_1_)
+@@ -32,6 +35,9 @@
+         return SoundCategory.HOSTILE;
+     }
+ 
++    //CM
++    public String cm_name() { return "Mob"; }
++
+     public void func_70636_d()
+     {
+         this.func_82168_bl();
+@@ -90,10 +96,16 @@
+         float f = (float)this.func_110148_a(SharedMonsterAttributes.field_111264_e).func_111126_e();
+         int i = 0;
+ 
++        // CM
++        DamageReporter.register_damage_attacker( p_70652_1_, this, f);
++        float ff = f;
++        // end CM
++        
+         if (p_70652_1_ instanceof EntityLivingBase)
+         {
+             f += EnchantmentHelper.func_152377_a(this.func_184614_ca(), ((EntityLivingBase)p_70652_1_).func_70668_bt());
+             i += EnchantmentHelper.func_77501_a(this);
++            DamageReporter.modify_damage((EntityLivingBase)p_70652_1_, DamageSource.func_76358_a(this), ff, f, "attacker enchants"); // CM
+         }
+ 
+         boolean flag = p_70652_1_.func_70097_a(DamageSource.func_76358_a(this), f);
+@@ -145,6 +157,9 @@
+ 
+     protected boolean func_70814_o()
+     {
++        if(CarpetSettings.lightSupression){
++            return true;
++        }
+         BlockPos blockpos = new BlockPos(this.field_70165_t, this.func_174813_aQ().field_72338_b, this.field_70161_v);
+ 
+         if (this.field_70170_p.func_175642_b(EnumSkyBlock.SKY, blockpos) > this.field_70146_Z.nextInt(32))
